@@ -1,0 +1,868 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+body{
+    height: 100vh;
+}
+
+.nav {
+    background-color: #7B0000;
+    border-radius: 0 0 30px 30px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Centraliza a barra de pesquisa */
+.barra__de__pesquisa {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.barra__de__pesquisa input {
+    width: 60%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+}
+
+/* Itens da direita */
+.nav__direita {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Ícones e links */
+.nav__direita a,
+.logo {
+    text-decoration: none;
+    color: white;
+    font-size: 1.4rem;
+}
+
+/* Estilo para os botões da navbar */
+.nav__direita {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Botões Entrar e Cadastre-se */
+.nav__direita > button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+/* Botão Entrar */
+.nav__direita > button:first-child {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+}
+
+.nav__direita > button:first-child:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Botão Cadastre-se */
+.nav__direita > button:last-child {
+    background-color: white;
+    color: #333;
+}
+
+.nav__direita > button:last-child:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-1px);
+}
+
+/* Estilo para os ícones e botão Sair (quando autenticado) */
+.nav__direita.hidden {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav__direita.hidden .carrinho,
+.nav__direita.hidden .perfil-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    transition: all 0.3s ease;
+}
+
+.nav__direita.hidden .carrinho:hover,
+.nav__direita.hidden .perfil-img:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+/* Botão Sair */
+.nav__direita.hidden > button {
+    padding: 6px 12px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav__direita.hidden > button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ajuste para os SVGs */
+.nav__direita.hidden svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Efeito de hover nos SVGs */
+.nav__direita.hidden a:hover svg {
+    fill: rgba(255, 255, 255, 0.9);
+}
+
+/* Efeito ativo nos botões */
+.nav__direita button:active {
+    transform: translateY(1px);
+}
+
+.texto-logo{
+    color: white;
+    font-weight: bold;
+    padding-left: 10px;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+/* Imagem do usuário */
+.perfil-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+.logo{
+    height: 50px;
+    width: 50px;
+}
+
+.icones_footer{
+    height: 15px;
+    width: 15px;
+}
+
+.carrinho{
+    height: 30px;
+    width: 30px;
+}
+
+.footer{
+    border-radius: 30px 30px 0 0;
+    background-color: #7B0000;
+    color: #FFFF;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer h2 {
+    margin-bottom: 1.5rem;
+    font-size: 20px;
+    color: #fff;
+}
+
+.footer p, .footer a {
+    font-size: 14px;
+    color: #ccc;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .footer > div {
+        min-width: 100%;
+    }
+}
+
+/* Carrossel */
+
+.carrossel {
+    position: relative;
+    max-width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px; 
+}
+
+.carrossel img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    transition: opacity 0.5s ease;
+}
+
+.btn-anterior, .btn-proximo {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+    z-index: 10;
+}
+
+.btn-anterior {
+    left: 10px;
+}
+
+.btn-proximo {
+    right: 10px;
+}
+
+.btn-anterior:hover, .btn-proximo:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slide {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+.slide.ativo {
+    display: block;
+}
+
+/* Cupons */
+
+.cupons__promocao {
+    text-align: center;
+    padding: 20px;
+}
+
+.cupom {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 15px;
+    background-color: #7B0000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+    position: relative;
+    cursor: pointer;
+}
+
+.cupom .tooltip {
+    visibility: hidden;
+    width: 200px;
+    background-color: #f44336;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.cupom:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.cupom:hover {
+    background-color: #e67e22;
+}
+
+.container__de__produtos {
+    padding: 40px;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.container__de__produtos h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.grid__produtos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.produto {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.produto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.produto img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.produto h3 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+}
+
+.produto p {
+    color: #2E7D32;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px 0 15px;
+}
+
+.btn-adicionar {
+    width: 100%;
+    padding: 12px 0;
+    margin-top: auto; /* Empurra o botão para baixo */
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-adicionar:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+/* Responsividade - ajusta para 2 colunas em tablets */
+@media (max-width: 900px) {
+    .grid__produtos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Responsividade - ajusta para 1 coluna em mobile */
+@media (max-width: 600px) {
+    .grid__produtos {
+        grid-template-columns: 1fr;
+    }
+    
+    .container__de__produtos {
+        padding: 20px;
+    }
+}
+
+/* Estilos para os modais */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-conteudo {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fechar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fechar:hover {
+    color: black;
+}
+
+.modal-conteudo input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-conteudo button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.modal-conteudo button:hover {
+    background-color: #45a049;
+}
+
+.modal-conteudo p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.modal-conteudo a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.modal-conteudo a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Estilo base para os botões de adicionar */
+.btn-adicionar {
+    width: 100%;
+    padding: 12px 0;
+    margin-top: 10px;
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Efeito hover */
+.btn-adicionar:hover {
+    background-color: #45a049; /* Verde mais escuro */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Efeito ao clicar */
+.btn-adicionar:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+/* Efeito de "pulse" quando adicionado */
+.btn-adicionar.added {
+    animation: pulse 0.5s;
+    background-color: #2E7D32; /* Verde mais escuro ainda */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Ícone do carrinho (opcional) */
+.btn-adicionar::after {
+    content: "🛒";
+    margin-left: 8px;
+    font-size: 14px;
+}
+
+/* Efeito de onda ao clicar */
+.btn-adicionar::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.btn-adicionar:focus:not(:active)::before {
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+/* Estilo para a mensagem de nenhum resultado */
+#mensagem-nenhum-resultado {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    color: #666;
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Estilos para a página do carrinho */
+.container-carrinho {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.itens-carrinho {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item-carrinho {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    align-items: center;
+}
+
+.info-produto h3 {
+    margin: 0;
+    color: #333;
+}
+
+.controles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-quantidade {
+    padding: 5px 10px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-remover {
+    padding: 5px 10px;
+    background: #ffebee;
+    color: #c62828;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.resumo-carrinho {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: fit-content;
+}
+
+.cupom-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.cupom-area input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.cupom-area button {
+    padding: 10px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.total-area {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.total-area p {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.btn-finalizar {
+    width: 100%;
+    padding: 12px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-finalizar:hover {
+    background: #45a049;
+}
+
+.carrinho-vazio {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .container-carrinho {
+        grid-template-columns: 1fr;
+    }
+    
+    .item-carrinho {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+.frete-nao-calculado {
+    color: #f44336;
+    font-weight: bold;
+}
+
+.frete-calculado {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.feedback-mensagem {
+    position: fixed !important;
+    top: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    padding: 15px 25px !important;
+    border-radius: 5px !important;
+    color: white !important;
+    font-weight: bold !important;
+    z-index: 10000 !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+    opacity: 1 !important;
+    transition: opacity 0.5s ease !important;
+}
+
+.feedback-sucesso {
+    background-color: #4CAF50 !important;
+}
+
+.feedback-erro {
+    background-color: #f44336 !important;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 12px;
+    height: 14px;
+    display: block;
+    margin-top: 4px;
+}
+
+input.invalid {
+    border: 2px solid #f44336 !important;
+}
+
+input.valid {
+    border: 2px solid #4CAF50 !important;
+}
+
+.metodo-pagamento {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.metodo-pagamento h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.metodo-pagamento .error-pagamento {
+    color: #f44336;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}
+
+.metodo-pagamento.error .error-pagamento {
+    display: block;
+}
+
+.metodo-pagamento.error {
+    border: 1px solid #f44336;
+    border-radius: 8px;
+    padding: 14px;
+}
+
+.opcoes-pagamento {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.opcoes-pagamento label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.opcoes-pagamento label:hover {
+    background: #eee;
+}
+
+.icone-pagamento {
+    width: 30px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.estoque-disponivel {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.item-carrinho .info-produto {
+    flex: 1;
+}
+
+/* Estilos para os ícones do footer */
+.icone-footer {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.contato-item, .rede-social {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.contato-item p, .rede-social a {
+    margin: 0;
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.rede-social a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contato-item:hover p, .rede-social:hover a {
+    color: #fff;
+}
+
+.contato-item:hover .icone-footer, .rede-social:hover .icone-footer {
+    fill: #fff;
+}
