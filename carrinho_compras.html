@@ -1,0 +1,255 @@
+<!-- Página Carrinho de Compras -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página - Carrinho de Compras</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="nav">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M21 2V22H19V15H15V8C15 4.68629 17.6863 2 21 2ZM19 4.53C18.17 5 17 6.17 17 8V13H19V4.53ZM9 13.9V22H7V13.9C4.71776 13.4367 3 11.419 3 9V3H5V10H7V3H9V10H11V3H13V9C13 11.419 11.2822 13.4367 9 13.9Z"></path></svg>
+            </a>
+            <a href="index.html" class="texto-logo">
+                <p class="texto-logo">Mercado Fácil</p>
+            </a>
+
+            <!-- Barra de pesquisa -->
+            <div class="barra__de__pesquisa">
+                <input type="text" id="pesquisa" placeholder="Buscar produtos...">
+                <button id="btn-pesquisar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(0,0,0,0.5)" width="20" height="20">
+                        <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Itens à direita - Dinâmicos -->
+            <div class="nav__direita" id="nav-direita">
+                <button>Entrar</button>
+                <button>Cadastre-se</button>
+            </div>
+
+            <!-- Itens à direita - Autenticado -->
+            <div class="nav__direita hidden">
+                <a href="carrinho_compras.html" class="carrinho"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M12.0049 2C15.3186 2 18.0049 4.68629 18.0049 8V9H22.0049V11H20.8379L20.0813 20.083C20.0381 20.6013 19.6048 21 19.0847 21H4.92502C4.40493 21 3.97166 20.6013 3.92847 20.083L3.17088 11H2.00488V9H6.00488V8C6.00488 4.68629 8.69117 2 12.0049 2ZM13.0049 13H11.0049V17H13.0049V13ZM9.00488 13H7.00488V17H9.00488V13ZM17.0049 13H15.0049V17H17.0049V13ZM12.0049 4C9.86269 4 8.1138 5.68397 8.00978 7.80036L8.00488 8V9H16.0049V8C16.0049 5.8578 14.3209 4.10892 12.2045 4.0049L12.0049 4Z"></path></svg></a>
+                
+                <a href="perfil.html" class="perfil-img">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path></svg>
+                </a>
+
+                <button>Sair</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Modal Login -->
+    <div id="modal-login" class="modal hidden">
+        <div class="modal-conteudo">
+            <span class="fechar" id="fechar-login">&times;</span>
+            <h2>Login</h2>
+            <input type="email" id="email-login" placeholder="Email"><br>
+            <input type="password" id="senha-login" placeholder="Senha"><br>
+            <button id="btn-login">Entrar</button>
+            <p>Não tem conta? <a href="#" id="ir-cadastro">Cadastre-se</a></p>
+        </div>
+    </div>
+
+     <!-- Modal Cadastro -->
+    <div id="modal-cadastro" class="modal hidden">
+        <div class="modal-conteudo">
+            <span class="fechar" id="fechar-cadastro">&times;</span>
+            <h2>Cadastro</h2>
+            
+            <div class="input-group">
+                <input type="text" id="nome-cadastro" placeholder="Nome" required>
+                <span class="error-message" id="nome-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="email" id="email-cadastro" placeholder="Email" required>
+                <span class="error-message" id="email-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" id="endereco-cadastro" placeholder="Endereço" required>
+                <span class="error-message" id="endereco-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="tel" id="telefone-cadastro" placeholder="Telefone" required>
+                <span class="error-message" id="telefone-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="date" id="data-cadastro" placeholder="Data de Nascimento" required>
+                <span class="error-message" id="data-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" id="cpf-cadastro" placeholder="CPF" required>
+                <span class="error-message" id="cpf-error"></span>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="senha-cadastro" placeholder="Senha" required>
+                <span class="error-message" id="senha-error"></span>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="confirmar-senha-cadastro" placeholder="Confirmar Senha" required>
+                <span class="error-message" id="confirmar-senha-error"></span>
+            </div>
+
+            <button id="btn-cadastrar">Cadastrar</button>
+            <p>Já tem conta? <a href="#" id="ir-login">Faça login</a></p>
+        </div>
+    </div>
+
+    <!-- Corpo -->
+    <main class="container-carrinho">
+        <div class="conteudo-principal">
+            <div class="cabecalho-carrinho">
+                <h1>Seu Carrinho</h1>
+                <br><br>
+                <a href="index.html" class="btn-voltar">← Voltar para Página Inicial</a>
+            </div>
+            <br><br>
+            <div class="itens-carrinho" id="itens-carrinho">
+                <!-- Itens serão adicionados dinamicamente aqui -->
+                <div class="carrinho-vazio">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="#7B0000">
+                        <path d="M4.00488 16V4H6.00488V16H18.0049V18H6.00488C5.4526 18 5.00488 17.5523 5.00488 17V4H3.00488V16H1.00488V18H3.00488V20H5.00488V22H7.00488V20H17.0049V22H19.0049V20H21.0049V18H19.0049V16H21.0049V14H19.0049V4H17.0049V14H5.00488V4H7.00488V2H17.0049V4H19.0049V2H21.0049V4C21.5572 4 22.0049 4.44772 22.0049 5V15C22.0049 15.5523 21.5572 16 21.0049 16H19.0049V21C19.0049 21.5523 18.5572 22 18.0049 22H6.00488C5.4526 22 5.00488 21.5523 5.00488 21V16H4.00488ZM8.00488 14H10.0049V16H8.00488V14ZM8.00488 10H10.0049V12H8.00488V10Z"></path>
+                    </svg>
+                    <p>Seu carrinho está vazio</p>
+                    <a href="index.html" class="btn-continuar">Ver Produtos</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="resumo-carrinho">
+      
+            
+            <div class="resumo-pedido">
+                <h2>Resumo do Pedido</h2>
+                <div class="cupom-area">
+                    <input type="text" id="codigo-cupom" placeholder="Insira seu cupom">
+                    <button id="aplicar-cupom">Aplicar</button>
+                </div>
+                
+                <div class="total-area">
+                    <div class="linha-total">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">R$ 0,00</span>
+                    </div>
+                    <div class="linha-total">
+                        <span>Frete:</span>
+                        <span id="frete-resumo">R$ 0,00</span>
+                    </div>
+                    <div class="linha-total">
+                        <span>Desconto:</span>
+                        <span id="desconto">R$ 0,00</span>
+                    </div>
+                    <div class="linha-total total-geral">
+                        <strong>Total:</strong>
+                        <strong id="total">R$ 0,00</strong>
+                    </div>
+                </div>
+                
+                <div class="metodo-pagamento">
+                    <h3>Método de Pagamento</h3>
+                    <div class="opcoes-pagamento">
+                        <label class="opcao-pagamento">
+                            <input type="radio" name="metodo-pagamento" value="pix">
+                            <span class="checkmark"></span>
+                            <span class="texto-pagamento">Pix</span>
+                        </label>
+                        <label class="opcao-pagamento">
+                            <input type="radio" name="metodo-pagamento" value="credito">
+                            <span class="checkmark"></span>
+                            <span class="texto-pagamento">Cartão de Crédito</span>
+                        </label>
+                        <label class="opcao-pagamento">
+                            <input type="radio" name="metodo-pagamento" value="dinheiro">
+                            <span class="checkmark"></span>
+                            <span class="texto-pagamento">Dinheiro</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button id="finalizar-compra" class="btn-finalizar">Finalizar Compra</button>
+                
+                <div class="cupons-disponiveis">
+                    <p>Quer mais descontos?</p>
+                    <a href="index.html#cupons" class="link-cupons">Veja nossos cupons disponíveis</a>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+    
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="contatos">
+            <h2>Contato</h2>
+            <div class="contato-item">
+                <!-- Ícone de Endereço -->
+                <svg class="icone-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM16.9497 15.9497C19.6834 13.2161 19.6834 8.78392 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.31658 8.78392 4.31658 13.2161 7.05025 15.9497L12 20.8995L16.9497 15.9497ZM12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11C14 12.1046 13.1046 13 12 13Z"></path></svg>
+                <p>Rua das Folhas, 123 - Araraquara, SP</p>
+            </div>
+            <div class="contato-item">
+                <!-- Ícone de Telefone -->
+                <svg class="icone-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821ZM6.84425 10.0252L8.7442 8.66809C8.20547 7.50514 7.83628 6.27183 7.64727 5H5.00907C5.00303 5.16632 5 5.333 5 5.5C5 12.9558 11.0442 19 18.5 19C18.667 19 18.8337 18.997 19 18.9909V16.3527C17.7282 16.1637 16.4949 15.7945 15.3319 15.2558L13.9748 17.1558C13.4258 16.9425 12.8956 16.6915 12.3874 16.4061L12.3293 16.373C10.3697 15.2587 8.74134 13.6303 7.627 11.6707L7.59394 11.6126C7.30849 11.1044 7.05754 10.5742 6.84425 10.0252Z"></path></svg>
+                <p>(16) 99999-9999</p>
+            </div>
+            <div class="contato-item">
+                <!-- Ícone de E-mail -->
+                <svg class="icone-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z"></path></svg>
+                <p>atendimento@mercadofacil.com</p>
+            </div>
+        </div>
+        <div class="sobre">
+            <h2>Sobre o Mercado Fácil</h2>
+            <p>Delivery de Mercado, inovação e os melhores preços do mercado.</p>
+            <p>Atendimento personalizado e entrega rápida em todo o Brasil!</p>
+        </div>
+        <div class="redes__sociais">
+            <h2>Redes Sociais</h2>
+            <div class="rede-social">
+                <!-- Ícone de Instagram -->
+                <svg class="icone-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M12.001 9C10.3436 9 9.00098 10.3431 9.00098 12C9.00098 13.6573 10.3441 15 12.001 15C13.6583 15 15.001 13.6569 15.001 12C15.001 10.3427 13.6579 9 12.001 9ZM12.001 7C14.7614 7 17.001 9.2371 17.001 12C17.001 14.7605 14.7639 17 12.001 17C9.24051 17 7.00098 14.7629 7.00098 12C7.00098 9.23953 9.23808 7 12.001 7ZM18.501 6.74915C18.501 7.43926 17.9402 7.99917 17.251 7.99917C16.5609 7.99917 16.001 7.4384 16.001 6.74915C16.001 6.0599 16.5617 5.5 17.251 5.5C17.9393 5.49913 18.501 6.0599 18.501 6.74915ZM12.001 4C9.5265 4 9.12318 4.00655 7.97227 4.0578C7.18815 4.09461 6.66253 4.20007 6.17416 4.38967C5.74016 4.55799 5.42709 4.75898 5.09352 5.09255C4.75867 5.4274 4.55804 5.73963 4.3904 6.17383C4.20036 6.66332 4.09493 7.18811 4.05878 7.97115C4.00703 9.0752 4.00098 9.46105 4.00098 12C4.00098 14.4745 4.00753 14.8778 4.05877 16.0286C4.0956 16.8124 4.2012 17.3388 4.39034 17.826C4.5591 18.2606 4.7605 18.5744 5.09246 18.9064C5.42863 19.2421 5.74179 19.4434 6.17187 19.6094C6.66619 19.8005 7.19148 19.9061 7.97212 19.9422C9.07618 19.9939 9.46203 20 12.001 20C14.4755 20 14.8788 19.9934 16.0296 19.9422C16.8117 19.9055 17.3385 19.7996 17.827 19.6106C18.2604 19.4423 18.5752 19.2402 18.9074 18.9085C19.2436 18.5718 19.4445 18.2594 19.6107 17.8283C19.8013 17.3358 19.9071 16.8098 19.9432 16.0289C19.9949 14.9248 20.001 14.5389 20.001 12C20.001 9.52552 19.9944 9.12221 19.9432 7.97137C19.9064 7.18906 19.8005 6.66149 19.6113 6.17318C19.4434 5.74038 19.2417 5.42635 18.9084 5.09255C18.573 4.75715 18.2616 4.55693 17.8271 4.38942C17.338 4.19954 16.8124 4.09396 16.0298 4.05781C14.9258 4.00605 14.5399 4 12.001 4Z"></path></svg>
+                <a href="#" class="icone__instagram">Instagram</a>
+            </div>
+            <div class="rede-social">
+                <!-- Ícone de Facebook -->
+                <svg class="icone-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M12.001 2C6.47813 2 2.00098 6.47715 2.00098 12C2.00098 16.9913 5.65783 21.1283 10.4385 21.8785V14.8906H7.89941V12H10.4385V9.79688C10.4385 7.29063 11.9314 5.90625 14.2156 5.90625C15.3097 5.90625 16.4541 6.10156 16.4541 6.10156V8.5625H15.1931C13.9509 8.5625 13.5635 9.33334 13.5635 10.1242V12H16.3369L15.8936 14.8906H13.5635V21.8785C18.3441 21.1283 22.001 16.9913 22.001 12C22.001 6.47715 17.5238 2 12.001 2Z"></path></svg>
+                <a href="#" class="icone__facebook">Facebook</a>
+            </div>
+            <div class="rede-social">
+                <!-- Ícone do X -->
+                <svg class="icone-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M10.4883 14.651L15.25 21H22.25L14.3917 10.5223L20.9308 3H18.2808L13.1643 8.88578L8.75 3H1.75L9.26086 13.0145L2.31915 21H4.96917L10.4883 14.651ZM16.25 19L5.75 5H7.75L18.25 19H16.25Z"></path></svg>
+                <a href="#" class="icone__twitter">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- <script src="script/auth.js"></script>
+    <script src="script/estoque.js"></script>
+    <script src="script/carrinho.js"></script>
+    <script src="script/feedback.js"></script> -->
+
+    <script src="script_teste/login.js"></script>
+    <script src="script_teste/carrinho.js"></script>
+    <script src="script_teste/pesquisa.js"></script>
+</body>
+</html>
