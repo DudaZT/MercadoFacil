@@ -26,7 +26,7 @@ O objetivo do projeto é criar uma solução prática para facilitar pedidos onl
 ---
 
 ## 📦 Como acessar
-https://dudazt.github.io/MercadoFacil/
+
 Você pode ver a versão web (protótipo) [clicando aqui](https://dudazt.github.io/MercadoFacil/).
 
 ---
