@@ -48,10 +48,12 @@ document.addEventListener('DOMContentLoaded', function() {
         carregarPedidosUsuario();
     }
     
-    // Carregar endereços do usuário
-    if (document.getElementById('enderecos')) {
-        carregarEnderecosUsuario();
+    // Carregar endereço do usuário
+    if (document.getElementById('endereco')) {
+        carregarEnderecoUsuario();
     }
+    
+    
 });
 
 function carregarDadosUsuario() {
@@ -68,12 +70,13 @@ function carregarDadosUsuario() {
         document.getElementById('nome').value = usuario.nome || '';
         document.getElementById('email').value = usuario.email || '';
         document.getElementById('telefone').value = usuario.telefone || '';
+        document.getElementById('endereco').value = usuario.endereco || '';
         document.getElementById('data-nascimento').value = usuario.dataNascimento || '';
         document.getElementById('cpf').value = usuario.cpf || '';
         
         // Se o usuário tiver mais dados no localStorage, podemos carregá-los aqui
-        if (usuario.enderecos) {
-            localStorage.setItem('enderecosUsuario', JSON.stringify(usuario.enderecos));
+        if (usuario.endereco) {
+            localStorage.setItem('enderecoUsuario', JSON.stringify(usuario.endereco));
         }
     }
 }
@@ -82,26 +85,35 @@ function atualizarPerfil() {
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
     const usuarioIndex = usuarios.findIndex(u => u.email === usuarioLogado.email);
-    
+
     if (usuarioIndex === -1) {
         mostrarFeedback('Erro ao atualizar perfil', 'erro');
         return;
     }
-    
-    // Obter valores do formulário
+
+    // Pega os novos dados do formulário
+    const novoEmail = document.getElementById('email').value;
+
     usuarios[usuarioIndex].nome = document.getElementById('nome').value;
+    usuarios[usuarioIndex].endereco = document.getElementById('endereco').value;
     usuarios[usuarioIndex].telefone = document.getElementById('telefone').value;
     usuarios[usuarioIndex].dataNascimento = document.getElementById('data-nascimento').value;
     usuarios[usuarioIndex].cpf = document.getElementById('cpf').value;
-    
-    // Atualizar localStorage
+    usuarios[usuarioIndex].email = novoEmail;
+
+    // Atualiza o localStorage com usuários atualizados
     localStorage.setItem('usuarios', JSON.stringify(usuarios));
-    localStorage.setItem('usuarioLogado', JSON.stringify(usuarios[usuarioIndex]));
-    
-    // Atualizar cabeçalho
-    document.getElementById('perfil-nome').textContent = usuarios[usuarioIndex].nome;
-    
+
+    // Atualiza o usuarioLogado com o novo email e nome
+    usuarioLogado.email = novoEmail;
+    usuarioLogado.nome = usuarios[usuarioIndex].nome;
+    usuarioLogado.endereco = usuarios[usuarioIndex].endereco;
+    localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+
     mostrarFeedback('Perfil atualizado com sucesso!', 'sucesso');
+
+    // Atualizar a navbar ou onde quiser mostrar o nome/email
+    document.getElementById('perfil-nome').textContent = usuarios[usuarioIndex].nome;
 }
 
 function carregarPedidosUsuario() {
@@ -131,19 +143,12 @@ function carregarPedidosUsuario() {
         // Determinar status
         let statusClass = 'status-processando';
         let statusText = 'Processando';
-        if (pedido.status === 'entregue') {
-            statusClass = 'status-entregue';
-            statusText = 'Entregue';
-        } else if (pedido.status === 'cancelado') {
-            statusClass = 'status-cancelado';
-            statusText = 'Cancelado';
-        }
         
         // Criar HTML do pedido
         pedidoElement.innerHTML = `
             <div class="pedido-header">
                 <div>
-                    <h3>Pedido #MF${pedido.id.toString().slice(-5)}</h3>
+                    <h3>Pedido #${pedido.id}</h3>
                     <p>Realizado em: ${dataFormatada}</p>
                 </div>
                 <span class="pedido-status ${statusClass}">${statusText}</span>
@@ -152,7 +157,6 @@ function carregarPedidosUsuario() {
             <div class="pedido-produtos">
                 ${pedido.itens.map(item => `
                     <div class="produto-item">
-                        <img src="https://via.placeholder.com/60" alt="${item.nome}" class="produto-img">
                         <div class="produto-info">
                             <h4>${item.nome}</h4>
                             <p>Quantidade: ${item.quantidade}</p>
@@ -166,24 +170,22 @@ function carregarPedidosUsuario() {
                 <p>Total: R$ ${pedido.total.toFixed(2)}</p>
             </div>
             
-            <button class="btn btn-secondary">Detalhes do Pedido</button>
-            ${pedido.status === 'entregue' ? '<button class="btn btn-secondary">Comprar Novamente</button>' : ''}
         `;
         
         pedidosContainer.appendChild(pedidoElement);
     });
 }
 
-function carregarEnderecosUsuario() {
+function carregarEnderecoUsuario() {
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
-    const enderecosContainer = document.querySelector('#enderecos .enderecos-lista');
+    const enderecoContainer = document.querySelector('#endereco .endereco-lista');
     
     // Criar elemento para o endereço principal
     const enderecoPrincipal = document.createElement('div');
     enderecoPrincipal.className = 'endereco-card';
     enderecoPrincipal.innerHTML = `
         <span class="endereco-padrao">Padrão</span>
-        <h3>Endereço Principal</h3>
+        <h3>Endereço</h3>
         <p>${usuarioLogado.nome}</p>
         <p>${usuarioLogado.endereco}</p>
         
@@ -192,42 +194,95 @@ function carregarEnderecosUsuario() {
         </div>
     `;
     
-    enderecosContainer.appendChild(enderecoPrincipal);
+    enderecoContainer.appendChild(enderecoPrincipal);
     
-    // Adicionar event listener para o botão de novo endereço
-    document.getElementById('btn-novo-endereco').addEventListener('click', function() {
-        adicionarNovoEndereco();
-    });
 }
 
-function mostrarFeedback(mensagem, tipo) {
-    const feedbacks = document.querySelectorAll('.feedback-mensagem');
-    feedbacks.forEach(fb => fb.remove());
-    
-    const feedback = document.createElement('div');
-    feedback.className = `feedback-mensagem feedback-${tipo}`;
-    feedback.textContent = mensagem;
-    
-    feedback.style.position = 'fixed';
-    feedback.style.top = '20px';
-    feedback.style.left = '50%';
-    feedback.style.transform = 'translateX(-50%)';
-    feedback.style.padding = '15px 25px';
-    feedback.style.borderRadius = '5px';
-    feedback.style.color = 'white';
-    feedback.style.fontWeight = 'bold';
-    feedback.style.zIndex = '10000';
-    feedback.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-    feedback.style.opacity = '1';
-    feedback.style.transition = 'opacity 0.5s ease';
-    feedback.style.textAlign = 'center';
+function mostrarFeedback(msg, tipo) {
+    document.querySelectorAll('.feedback-mensagem').forEach(el => el.remove());
 
-    feedback.style.backgroundColor = tipo === 'sucesso' ? '#4CAF50' : '#f44336';
-    
-    document.body.appendChild(feedback);
-    
+    const el = document.createElement('div');
+    el.className = `feedback-mensagem feedback-${tipo}`;
+    el.textContent = msg;
+
+    document.body.appendChild(el);
+
     setTimeout(() => {
-        feedback.style.opacity = '0';
-        setTimeout(() => feedback.remove(), 500);
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 500);
     }, 5000);
 }
+
+
+// Lógica para alteração de senha
+document.querySelector('.configuracoes-seguranca .btn.btn-primary').addEventListener('click', function () {
+    const senhaAtual = document.getElementById('senha-atual').value;
+    const novaSenha = document.getElementById('nova-senha').value;
+    const confirmarSenha = document.getElementById('confirmar-senha').value;
+
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+    const usuarioIndex = usuarios.findIndex(u => u.email === usuarioLogado.email);
+
+    if (usuarioIndex === -1) {
+        mostrarFeedback('Usuário não encontrado', 'erro');
+        return;
+    }
+
+    const usuario = usuarios[usuarioIndex];
+
+    // Validar senha atual
+    if (usuario.senha !== senhaAtual) {
+        mostrarFeedback('Senha atual incorreta', 'erro');
+        return;
+    }
+
+    // Validar nova senha
+    if (novaSenha.length < 6) {
+        mostrarFeedback('A nova senha deve ter pelo menos 6 caracteres', 'erro');
+        return;
+    }
+
+    if (novaSenha !== confirmarSenha) {
+        mostrarFeedback('As senhas não coincidem', 'erro');
+        return;
+    }
+
+    
+
+    // Atualizar senha no array de usuários e localStorage
+    usuarios[usuarioIndex].senha = novaSenha;
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+    mostrarFeedback('Senha alterada com sucesso!', 'sucesso');
+
+    // Limpa os campos
+    document.getElementById('senha-atual').value = '';
+    document.getElementById('nova-senha').value = '';
+    document.getElementById('confirmar-senha').value = '';
+});
+
+// Lógica para exclusão de conta
+document.querySelector('.configuracoes-conta .btn.btn-secondary').addEventListener('click', function () {
+    const confirmacao = confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.');
+
+    if (!confirmacao) return;
+
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    // Remove o usuário da lista
+    usuarios = usuarios.filter(u => u.email !== usuarioLogado.email);
+
+    // Atualiza localStorage
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    localStorage.removeItem('usuarioLogado');
+    localStorage.removeItem('historicoPedidos');
+    localStorage.removeItem('enderecoUsuario');
+
+    mostrarFeedback('Conta excluída com sucesso!', 'sucesso');
+
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 2000);
+});

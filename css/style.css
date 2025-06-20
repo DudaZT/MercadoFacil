@@ -463,8 +463,17 @@ body{
     background-color: #fefefe;
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
+    width: 95%;
+    max-width: 600px; 
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
 }
 
 .fechar {
@@ -504,8 +513,9 @@ body{
 }
 
 .modal-conteudo p {
+    grid-column: 1 / 3;
+    margin-top: 12px;
     text-align: center;
-    margin-top: 15px;
 }
 
 .modal-conteudo a {
@@ -621,14 +631,42 @@ body{
 }
 
 .input-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group.full {
+    grid-column: 1 / 3; /* ocupa as duas colunas */
+}
+
+input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#btn-cadastrar {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 16px;
+    grid-column: 1 / 3;
+}
+
+#btn-cadastrar:hover {
+    background-color: #45a049;
 }
 
 .error-message {
     color: #f44336;
     font-size: 12px;
     height: 14px;
-    display: block;
     margin-top: 4px;
 }
 
@@ -703,18 +741,19 @@ input.valid {
 }
 
 .feedback-mensagem {
-    position: fixed !important;
-    top: 20px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    padding: 15px 25px !important;
-    border-radius: 5px !important;
-    color: white !important;
-    font-weight: bold !important;
-    z-index: 10000 !important;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
-    opacity: 1 !important;
-    transition: opacity 0.5s ease !important;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    z-index: 10000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    text-align: center;
 }
 
 .feedback-sucesso {
@@ -723,10 +762,6 @@ input.valid {
 
 .feedback-erro {
     background-color: #f44336 !important;
-}
-
-.feedback-info {
-    background-color: #2196F3 !important;
 }
 
 .endereco-area, .saldo-area {
@@ -751,6 +786,10 @@ input.valid {
 
 .btn-finalizar:disabled {
     cursor: not-allowed;
+}
+
+.nome_produto{
+    white-space: nowrap;
 }
 
 .estoque-disponivel{
@@ -833,6 +872,7 @@ input.valid {
 .controles {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     margin-top: 20px;
     margin-bottom: 65px;
@@ -1128,4 +1168,253 @@ input.valid {
     margin-top: 15px;
 
     text-align: center;
+}
+
+/* Estilos específicos para a página de perfil */
+.perfil-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    gap: 2rem;
+}
+
+.perfil-info h2,
+.perfil-info p {
+    white-space: nowrap;
+}
+
+.perfil-sidebar {
+    min-width: 250px; /* largura mínima */
+    width: max-content; /* se adapta ao conteúdo */
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+}
+
+.perfil-conteudo {
+    flex: 1;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 2rem;
+}
+
+.perfil-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.perfil-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1.5rem;
+    border: 3px solid #4CAF50;
+}
+
+.perfil-info h2 {
+    margin: 0;
+    color: #333;
+}
+
+.perfil-info p {
+    margin: 0.5rem 0 0;
+    color: #666;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.menu-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: #f0f7f0;
+    color: #4CAF50;
+}
+
+.secao-perfil {
+    display: none;
+}
+
+.secao-perfil.ativo {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-control:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3e8e41;
+}
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.pedido-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.pedido-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.pedido-status {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status-processando {
+    background-color: #fff8e1;
+    color: #ff8f00;
+}
+
+.pedido-produtos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.produto-item {
+    display: flex;
+    align-items: center;
+    width: calc(50% - 0.5rem);
+}
+
+.produto-info h4 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+}
+
+.produto-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.pedido-total {
+    text-align: right;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.endereco-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.endereco-padrao {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.endereco-acoes {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.configuracoes-seguranca .form-group {
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .perfil-container {
+        flex-direction: column;
+    }
+    
+    .perfil-sidebar {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+    
+    .produto-item {
+        width: 100%;
+    }
 }

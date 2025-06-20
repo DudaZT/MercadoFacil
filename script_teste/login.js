@@ -1,37 +1,19 @@
-function mostrarFeedback(mensagem, tipo) {
-    const feedbacks = document.querySelectorAll('.feedback-mensagem');
-    feedbacks.forEach(fb => fb.remove());
-    
-    const feedback = document.createElement('div');
-    feedback.className = `feedback-mensagem feedback-${tipo}`;
-    feedback.textContent = mensagem;
-    
-    feedback.style.position = 'fixed';
-    feedback.style.top = '20px';
-    feedback.style.left = '50%';
-    feedback.style.transform = 'translateX(-50%)';
-    feedback.style.padding = '15px 25px';
-    feedback.style.borderRadius = '5px';
-    feedback.style.color = 'white';
-    feedback.style.fontWeight = 'bold';
-    feedback.style.zIndex = '10000';
-    feedback.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-    feedback.style.opacity = '1';
-    feedback.style.transition = 'opacity 0.5s ease';
-    feedback.style.textAlign = 'center';
+function mostrarFeedback(msg, tipo) {
+    document.querySelectorAll('.feedback-mensagem').forEach(el => el.remove());
 
-    feedback.style.backgroundColor = tipo === 'sucesso' ? '#4CAF50' : '#f44336';
-    
-    document.body.appendChild(feedback);
-    
+    const el = document.createElement('div');
+    el.className = `feedback-mensagem feedback-${tipo}`;
+    el.textContent = msg;
+
+    document.body.appendChild(el);
+
     setTimeout(() => {
-        feedback.style.opacity = '0';
-        setTimeout(() => feedback.remove(), 500);
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 500);
     }, 5000);
 }
 
 // SISTEMA DE LOGIN
-
 document.addEventListener('DOMContentLoaded', function() {
     // Elementos da Navbar
     const navDireita = document.getElementById('nav-direita');
@@ -60,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event Listeners para fechar modais
     fecharLogin.addEventListener('click', () => toggleModal(modalLogin));
     fecharCadastro.addEventListener('click', () => toggleModal(modalCadastro));
+
     window.addEventListener('click', (e) => {
         if (e.target === modalLogin) toggleModal(modalLogin);
         if (e.target === modalCadastro) toggleModal(modalCadastro);
@@ -126,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             isValid = false;
         }
         
-        // Validação do Email (formato padrão de email)
+        // Validação do Email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!email || !emailRegex.test(email)) {
             showError('email-cadastro', 'email-error', 'Por favor, insira um email válido');
@@ -171,12 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
             isValid = false;
         }
 
-
         if (!isValid) {
             return;
         }
-
-        
 
         // Verificar se o usuário já existe
         const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
@@ -204,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mostrarFeedback('Cadastro realizado com sucesso!', 'sucesso');
         
         // Fechar modal e limpar formulário
-        modalCadastro.classList.add('hidden'); // Fecha o modal diretamente
+        modalCadastro.classList.add('hidden'); 
         document.getElementById('nome-cadastro').value = '';
         document.getElementById('email-cadastro').value = '';
         document.getElementById('endereco-cadastro').value = '';
@@ -295,26 +275,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Validação do CPF
 function validarCPF(cpf) {
-    cpf = cpf.replace(/[^\d]+/g, '');
-    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+    // Remove tudo que não for número
+    cpf = cpf.replace(/\D/g, '');
 
-    let soma = 0, resto;
-
-    for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf[9])) return false;
-
-    soma = 0;
-    for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    return resto === parseInt(cpf[10]);
+    // Verifica se tem exatamente 11 dígitos
+    return cpf.length === 11;
 }
+
 
 // Validação do Telefone (10 ou 11 dígitos)
 function validarTelefone(telefone) {
     const numeros = telefone.replace(/\D/g, '');
+
     return numeros.length === 10 || numeros.length === 11;
 }
 

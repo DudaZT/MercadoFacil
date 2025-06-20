@@ -11,8 +11,6 @@ if (!localStorage.getItem('estoque')) {
     localStorage.setItem('estoque', JSON.stringify(estoqueInicial));
 }
 
-
-
 // Função para obter o estoque atual
 function getEstoque() {
     return JSON.parse(localStorage.getItem('estoque'));
@@ -79,44 +77,24 @@ atualizarExibicaoEstoque();
 document.addEventListener('estoqueAtualizado', atualizarExibicaoEstoque);
 
 // Mostrar feedback para o usuário
-function mostrarFeedback(mensagem, tipo) {
-    const feedbacks = document.querySelectorAll('.feedback-mensagem');
-    feedbacks.forEach(fb => fb.remove());
-    
-    const feedback = document.createElement('div');
-    feedback.className = `feedback-mensagem feedback-${tipo}`;
-    feedback.textContent = mensagem;
-    
-    feedback.style.position = 'fixed';
-    feedback.style.top = '20px';
-    feedback.style.left = '50%';
-    feedback.style.transform = 'translateX(-50%)';
-    feedback.style.padding = '15px 25px';
-    feedback.style.borderRadius = '5px';
-    feedback.style.color = 'white';
-    feedback.style.fontWeight = 'bold';
-    feedback.style.zIndex = '10000';
-    feedback.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-    feedback.style.opacity = '1';
-    feedback.style.transition = 'opacity 0.5s ease';
-    feedback.style.textAlign = 'center';
+function mostrarFeedback(msg, tipo) {
+    document.querySelectorAll('.feedback-mensagem').forEach(el => el.remove());
 
-    feedback.style.backgroundColor = tipo === 'sucesso' ? '#4CAF50' : '#f44336';
-    
-    document.body.appendChild(feedback);
-    
+    const el = document.createElement('div');
+    el.className = `feedback-mensagem feedback-${tipo}`;
+    el.textContent = msg;
+
+    document.body.appendChild(el);
+
     setTimeout(() => {
-        feedback.style.opacity = '0';
-        setTimeout(() => feedback.remove(), 500);
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 500);
     }, 5000);
 }
-
-// =========================
 
 // SISTEMA DE CARRINHO E CUPONS
 document.addEventListener('DOMContentLoaded', function() {
     // Elementos do carrinho
-    let desconto = 0;
     const subtotalElement = document.getElementById('subtotal');
     const descontoElement = document.getElementById('desconto');
     const totalElement = document.getElementById('total');
@@ -162,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('cupomAplicado', cupomPendente);
             localStorage.removeItem('cupomParaAplicar');
             
-            // Mostra feedback visual
+            // Mostra feedback
             if (cupons[cupomPendente].desconto) {
                 const percentual = cupons[cupomPendente].desconto * 100;
                 mostrarFeedback(`Cupom aplicado automaticamente: ${percentual}% de desconto!`, 'sucesso');
@@ -187,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
         calcularTotal();
         verificarCupomPendente();
 
-        // Event listeners
         btnAplicarCupom.addEventListener('click', aplicarCupom);
         btnFinalizar.addEventListener('click', finalizarCompra);
     }
@@ -300,6 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const estoqueAtual = getEstoque();
+
         // Verificar estoque
         if (estoqueAtual[nome] <= 0) {
             mostrarFeedback(`Desculpe, ${nome} está esgotado no momento`, 'erro');
@@ -357,11 +335,12 @@ document.addEventListener('DOMContentLoaded', function() {
             itemElement.className = 'item-carrinho';
             itemElement.innerHTML = `
                 <div class="info-produto">
-                    <h3>${item.nome}</h3>
+                    <h3 class="nome_produto">${item.nome}</h3>
                     <p>R$ ${item.preco.toFixed(2)}</p>
                     <p class="estoque-disponivel">Estoque disponível: ${getEstoque()[item.nome]}</p>
                 </div>
                 <div class="controles">
+                    <p>Quantidade: </p>
                     <button class="btn-quantidade btn-diminuir" data-index="${index}">-</button>
                     <span>${item.quantidade}</span>
                     <button class="btn-quantidade btn-aumentar" data-index="${index}">+</button>
@@ -375,7 +354,6 @@ document.addEventListener('DOMContentLoaded', function() {
             carrinhoContainer.appendChild(itemElement);
         });
         
-        // Adicionar event listeners aos botões
         document.querySelectorAll('.btn-diminuir').forEach(btn => {
             btn.addEventListener('click', function() {
                 const index = parseInt(this.getAttribute('data-index'));
@@ -398,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Se o usuário sair da página de carrinho o cupomAplicado é removido do LocalStorage
     window.addEventListener('beforeunload', function() {
         if (window.location.pathname.endsWith('carrinho_compras.html')) {
             localStorage.removeItem('cupomAplicado');
@@ -420,11 +399,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Verificar estoque
         if (mudanca > 0 && novoValor > estoqueAtual[produto.nome]) {
             mostrarFeedback(`Quantidade máxima de ${produto.nome} no estoque é ${estoqueAtual[produto.nome]} unidades`, 'erro');
+
             return;
         }
         
         produto.quantidade = novoValor;
         localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
         atualizarCarrinho();
         calcularTotal();
         mostrarFeedback(`Quantidade de ${produto.nome} alterada para ${novoValor}`, 'sucesso');
@@ -439,6 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirmar) {
             carrinho.splice(index, 1);
             localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
             atualizarCarrinho();
             calcularTotal();
             mostrarFeedback(`${nomeProduto} removido do carrinho`, 'sucesso');
@@ -464,7 +446,6 @@ document.addEventListener('DOMContentLoaded', function() {
         descontoElement.textContent = `R$ ${valorDesconto.toFixed(2)}`;
         totalElement.textContent = `R$ ${total.toFixed(2)}`;
         
-
         desconto = valorDesconto;
 
         // Sempre habilitar o botão de finalizar compra
@@ -614,14 +595,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 endereco: usuarioLogado.endereco,
                 estado: estadoElement.value,
                 status: 'pendente',
-                metodoPagamento: metodoPagamento
+                metodoPagamento: metodoPagamento,
+                email: usuarioLogado.email
             };
             
             const feedbackMsg = `
                 Compra finalizada com sucesso!
                 Número do pedido: #${pedido.id}
                 Total: R$ ${pedido.total.toFixed(2)}
-                Método: ${pedido.metodoPagamento}
+                Método de Pagamento: ${pedido.metodoPagamento}
                 Entrega em: ${pedido.endereco}
             `;
             
@@ -651,7 +633,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Adicionar event listeners aos botões "Adicionar ao Carrinho" na página de produtos
     document.querySelectorAll('.btn-adicionar').forEach(btn => {
         btn.addEventListener('click', function() {
             const nome = this.getAttribute('data-nome');
@@ -660,7 +641,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Adicionar event listeners aos cupons na página de produtos
     document.querySelectorAll('.cupom').forEach(cupom => {
       cupom.addEventListener('click', function(e) {
             e.preventDefault();

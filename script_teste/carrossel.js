@@ -1,5 +1,4 @@
 // SISTEMA DO CARROSSEL 
-
 document.addEventListener('DOMContentLoaded', function() {
   // Selecionar elementos do carrossel
   const carrossel = document.querySelector('.carrossel');

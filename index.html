@@ -1,5 +1,3 @@
-<!-- Página Inicial -->
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -33,7 +31,7 @@
                 </button>
             </div>
 
-            <!-- Itens à direita - Dinâmicos -->
+            <!-- Itens à direita - Não Autenticado -->
             <div class="nav__direita" id="nav-direita">
                 <button>Entrar</button>
                 <button>Cadastre-se</button>
@@ -69,45 +67,47 @@
         <div class="modal-conteudo">
             <span class="fechar" id="fechar-cadastro">&times;</span>
             <h2>Cadastro</h2>
-            
-            <div class="input-group">
-                <input type="text" id="nome-cadastro" placeholder="Nome" required>
-                <span class="error-message" id="nome-error"></span>
-            </div>
-            
-            <div class="input-group">
-                <input type="email" id="email-cadastro" placeholder="Email" required>
-                <span class="error-message" id="email-error"></span>
-            </div>
-            
-            <div class="input-group">
-                <input type="text" id="endereco-cadastro" placeholder="Endereço" required>
-                <span class="error-message" id="endereco-error"></span>
-            </div>
-            
-            <div class="input-group">
-                <input type="tel" id="telefone-cadastro" placeholder="Telefone" required>
-                <span class="error-message" id="telefone-error"></span>
-            </div>
-            
-            <div class="input-group">
-                <input type="date" id="data-cadastro" placeholder="Data de Nascimento" required>
-                <span class="error-message" id="data-error"></span>
-            </div>
-            
-            <div class="input-group">
-                <input type="text" id="cpf-cadastro" placeholder="CPF" required>
-                <span class="error-message" id="cpf-error"></span>
-            </div>
 
-            <div class="input-group">
-                <input type="password" id="senha-cadastro" placeholder="Senha" required>
-                <span class="error-message" id="senha-error"></span>
-            </div>
-            
-            <div class="input-group">
-                <input type="password" id="confirmar-senha-cadastro" placeholder="Confirmar Senha" required>
-                <span class="error-message" id="confirmar-senha-error"></span>
+            <div class="form-grid">
+                <div class="input-group full">
+                    <input type="text" id="nome-cadastro" placeholder="Nome" required>
+                    <span class="error-message" id="nome-error"></span>
+                </div>
+
+                <div class="input-group full">
+                    <input type="email" id="email-cadastro" placeholder="Email" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="endereco-cadastro" placeholder="Endereço" required>
+                    <span class="error-message" id="endereco-error"></span>
+                </div>
+
+                <div class="input-group">
+                    <input type="tel" id="telefone-cadastro" placeholder="Telefone" required>
+                    <span class="error-message" id="telefone-error"></span>
+                </div>
+
+                <div class="input-group">
+                    <input type="date" id="data-cadastro" placeholder="Data de Nascimento" required>
+                    <span class="error-message" id="data-error"></span>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="cpf-cadastro" placeholder="CPF" required>
+                    <span class="error-message" id="cpf-error"></span>
+                </div>
+
+                <div class="input-group full">
+                    <input type="password" id="senha-cadastro" placeholder="Senha" required>
+                    <span class="error-message" id="senha-error"></span>
+                </div>
+
+                <div class="input-group full">
+                    <input type="password" id="confirmar-senha-cadastro" placeholder="Confirmar Senha" required>
+                    <span class="error-message" id="confirmar-senha-error"></span>
+                </div>
             </div>
 
             <button id="btn-cadastrar">Cadastrar</button>
@@ -133,7 +133,7 @@
         </div>
         
         <div class="container__de__produtos">
-            <!--Aqui será implementado imagens dos produtos-->
+
             <h2>Produtos em Destaque</h2>
             <div class="grid__produtos">
                 <!-- Produto 1 - Açúcar -->
